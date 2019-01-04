@@ -174,7 +174,7 @@ public final class BrowserSelector {
 
     private static boolean hasWarmupService(PackageManager pm, String packageName) {
         Intent serviceIntent = new Intent();
-        serviceIntent.setAction(ACTION_CUSTOM_TABS_CONNECTION);
+        serviceIntent.setAction("android-fix.support.customtabs.action.CustomTabsService".replace("android-fix.support", "android.support"));
         serviceIntent.setPackage(packageName);
         return (pm.resolveService(serviceIntent, 0) != null);
     }
