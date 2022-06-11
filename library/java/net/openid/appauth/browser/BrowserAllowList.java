@@ -14,20 +14,20 @@
 
 package net.openid.appauth.browser;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import java.util.Arrays;
 import java.util.List;
 
 /**
- * A whitelist of browsers which can be used as part of an authorization flows. Examples:
+ * A allowList of browsers which can be used as part of an authorization flows. Examples:
  *
  * ```java
  * // only allow Chrome, and only as a standalone browser
- * new BrowserWhitelist(VersionedBrowserMatcher.CHROME_BROWSER);
+ * new BrowserAllowList(VersionedBrowserMatcher.CHROME_BROWSER);
  *
  * // allow Chrome custom tabs only, but exclude a version range
- * new BrowserWhitelist(
+ * new BrowserAllowList(
  *     new VersionedBrowserMatcher(
  *         Browsers.Chrome.PACKAGE_NAME,
  *         Browsers.Chrome.SIGNATURE_SET,
@@ -40,14 +40,14 @@ import java.util.List;
  *         VersionRange.atLeast("45.3"));
  * ```
  */
-public class BrowserWhitelist implements BrowserMatcher {
+public class BrowserAllowList implements BrowserMatcher {
 
     private List<BrowserMatcher> mBrowserMatchers;
 
     /**
-     * Creates a browser whitelist, which will match if any of the provided matchers do.
+     * Creates a browser allowList, which will match if any of the provided matchers do.
      */
-    public BrowserWhitelist(BrowserMatcher... matchers) {
+    public BrowserAllowList(BrowserMatcher... matchers) {
         mBrowserMatchers = Arrays.asList(matchers);
     }
 

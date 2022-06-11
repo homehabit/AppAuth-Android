@@ -20,9 +20,9 @@ import static net.openid.appauth.Preconditions.checkNotEmpty;
 import static net.openid.appauth.Preconditions.checkNotNull;
 
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.VisibleForTesting;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -450,22 +450,16 @@ public class RegistrationResponse {
             throw new IllegalArgumentException("registration request not found in JSON");
         }
 
-        return new Builder(
-                RegistrationRequest.jsonDeserialize(json.getJSONObject(KEY_REQUEST)))
-                .setClientId(JsonUtil.getString(json, PARAM_CLIENT_ID))
-                .setClientIdIssuedAt(JsonUtil.getLongIfDefined(json, PARAM_CLIENT_ID_ISSUED_AT))
-                .setClientSecret(JsonUtil.getStringIfDefined(json, PARAM_CLIENT_SECRET))
-                .setClientSecretExpiresAt(
-                        JsonUtil.getLongIfDefined(json, PARAM_CLIENT_SECRET_EXPIRES_AT))
-                .setRegistrationAccessToken(
-                        JsonUtil.getStringIfDefined(json, PARAM_REGISTRATION_ACCESS_TOKEN))
-                .setRegistrationClientUri(
-                        JsonUtil.getUriIfDefined(json, PARAM_REGISTRATION_CLIENT_URI))
-                .setTokenEndpointAuthMethod(
-                        JsonUtil.getStringIfDefined(json, PARAM_TOKEN_ENDPOINT_AUTH_METHOD))
-                .setAdditionalParameters(
-                        JsonUtil.getStringMap(json, KEY_ADDITIONAL_PARAMETERS))
-                .build();
+        return new RegistrationResponse(
+                RegistrationRequest.jsonDeserialize(json.getJSONObject(KEY_REQUEST)),
+                JsonUtil.getString(json, PARAM_CLIENT_ID),
+                JsonUtil.getLongIfDefined(json, PARAM_CLIENT_ID_ISSUED_AT),
+                JsonUtil.getStringIfDefined(json, PARAM_CLIENT_SECRET),
+                JsonUtil.getLongIfDefined(json, PARAM_CLIENT_SECRET_EXPIRES_AT),
+                JsonUtil.getStringIfDefined(json, PARAM_REGISTRATION_ACCESS_TOKEN),
+                JsonUtil.getUriIfDefined(json, PARAM_REGISTRATION_CLIENT_URI),
+                JsonUtil.getStringIfDefined(json, PARAM_TOKEN_ENDPOINT_AUTH_METHOD),
+                JsonUtil.getStringMap(json, KEY_ADDITIONAL_PARAMETERS));
     }
 
     /**

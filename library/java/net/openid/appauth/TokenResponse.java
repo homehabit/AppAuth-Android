@@ -20,10 +20,10 @@ import static net.openid.appauth.Preconditions.checkNotEmpty;
 import static net.openid.appauth.Preconditions.checkNotNull;
 import static net.openid.appauth.Preconditions.checkNullOrNotEmpty;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.VisibleForTesting;
 import android.text.TextUtils;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -50,7 +50,7 @@ public class TokenResponse {
      * @see "The OAuth 2.0 Authorization Framework (RFC 6749), Section 7.1
      * <https://tools.ietf.org/html/rfc6749#section-7.1>"
      */
-    public static final String TOKEN_TYPE_BEARER = "bearer";
+    public static final String TOKEN_TYPE_BEARER = "Bearer";
 
     @VisibleForTesting
     static final String KEY_REQUEST = "request";
@@ -458,16 +458,15 @@ public class TokenResponse {
             throw new IllegalArgumentException(
                     "token request not provided and not found in JSON");
         }
-        return new TokenResponse.Builder(
-                TokenRequest.jsonDeserialize(json.getJSONObject(KEY_REQUEST)))
-                .setTokenType(JsonUtil.getStringIfDefined(json, KEY_TOKEN_TYPE))
-                .setAccessToken(JsonUtil.getStringIfDefined(json, KEY_ACCESS_TOKEN))
-                .setAccessTokenExpirationTime(JsonUtil.getLongIfDefined(json, KEY_EXPIRES_AT))
-                .setIdToken(JsonUtil.getStringIfDefined(json, KEY_ID_TOKEN))
-                .setRefreshToken(JsonUtil.getStringIfDefined(json, KEY_REFRESH_TOKEN))
-                .setScope(JsonUtil.getStringIfDefined(json, KEY_SCOPE))
-                .setAdditionalParameters(JsonUtil.getStringMap(json, KEY_ADDITIONAL_PARAMETERS))
-                .build();
+        return new TokenResponse(
+                TokenRequest.jsonDeserialize(json.getJSONObject(KEY_REQUEST)),
+                JsonUtil.getStringIfDefined(json, KEY_TOKEN_TYPE),
+                JsonUtil.getStringIfDefined(json, KEY_ACCESS_TOKEN),
+                JsonUtil.getLongIfDefined(json, KEY_EXPIRES_AT),
+                JsonUtil.getStringIfDefined(json, KEY_ID_TOKEN),
+                JsonUtil.getStringIfDefined(json, KEY_REFRESH_TOKEN),
+                JsonUtil.getStringIfDefined(json, KEY_SCOPE),
+                JsonUtil.getStringMap(json, KEY_ADDITIONAL_PARAMETERS));
     }
 
     /**

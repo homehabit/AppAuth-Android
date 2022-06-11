@@ -14,28 +14,28 @@
 
 package net.openid.appauth.browser;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import java.util.Arrays;
 import java.util.List;
 
 /**
- * A blacklist of browsers. This will reject a match for any browser on the list, and permit
+ * A denyList of browsers. This will reject a match for any browser on the list, and permit
  * all others. Examples:
  *
  * ```java
- * // blacklist Chrome, whether using a custom tab or not
- * new BrowserBlacklist(
+ * // denyList Chrome, whether using a custom tab or not
+ * new BrowserDenyList(
  *     VersionedBrowserMatcher.CHROME_BROWSER,
  *     VersionedBrowserMatcher.CHROME_CUSTOM_TAB);
  *
- * // blacklist Firefox
- * new BrowserBlacklist(
+ * // denyList Firefox
+ * new BrowserDenyList(
  *     VersionedBrowserMatcher.FIREFOX_BROWSER,
  *     VersionedBrowserMatcher.FIREFOX_CUSTOM_TAB);
  *
- * // blacklist Dolphin Browser
- * new BrowserBlacklist(
+ * // denyList Dolphin Browser
+ * new BrowserDenyList(
  *     new VersionedBrowserMatcher(
  *         "mobi.mgeek.TunnyBrowser",
  *         "<DOLPHIN_SIGNATURE>",
@@ -44,14 +44,14 @@ import java.util.List;
  * }
  * ```
  */
-public class BrowserBlacklist implements BrowserMatcher {
+public class BrowserDenyList implements BrowserMatcher {
 
     private List<BrowserMatcher> mBrowserMatchers;
 
     /**
-     * Creates a blacklist from the provided set of matchers.
+     * Creates a denyList from the provided set of matchers.
      */
-    public BrowserBlacklist(BrowserMatcher... matchers) {
+    public BrowserDenyList(BrowserMatcher... matchers) {
         mBrowserMatchers = Arrays.asList(matchers);
     }
 
